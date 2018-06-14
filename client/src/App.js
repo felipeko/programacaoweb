@@ -83,8 +83,8 @@ class RestApi extends React.Component {
       <Navbar/>
       <h4>Carrinhos existentes</h4>
       {
-        carts.map(id => <li>
-          {id} <a key={id} onClick={() => this.loadCart(id)}>(carregar)</a><a onClick={() => this.payCart(id)}>(marcar como pago)</a>
+        carts.map(id => <li key={id}>
+          {id} <a onClick={() => this.loadCart(id)}>(carregar)</a><a onClick={() => this.payCart(id)}>(marcar como pago)</a>
           {
             this.state.cart[id] &&
             <code>
