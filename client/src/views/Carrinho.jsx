@@ -5,7 +5,7 @@ import {removeProduct} from '../reducers/actions'
 import {Navbar} from './Navbar'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui'
 
-export const Carrinho = connect((state) => ({produtos: state}), {removeProduct})(({produtos, removeProduct}) =>
+export const Carrinho = connect((state) => ({produtos: state.shoppingCart}), {removeProduct})(({produtos, removeProduct}) =>
   <div>
     <Navbar/>
     <Table onCellClick={(row, column) => column === 3 && removeProduct(Object.keys(produtos)[row])}>

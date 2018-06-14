@@ -41,4 +41,4 @@ class UnconnectedProductCard extends React.Component {
   }
 }
 
-export const ProductCard = connect((state, ownProps) => ({quantity: state[ownProps.product.id]}), {addProduct})(UnconnectedProductCard )
+export const ProductCard = connect((state, ownProps) => ({quantity: state.shoppingCart[ownProps.product.id]}), {addProduct})(UnconnectedProductCard )

@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Redirect, Switch, Route, Link} from 'react-rout
 import {Produto} from './views/Produto'
 import {Carrinho} from './views/Carrinho'
 import {Wishlist} from './views/Wishlist'
+import {Navbar} from './views/Navbar'
 
 
 class App extends Component {
@@ -35,8 +36,7 @@ class App extends Component {
 
 const Index = () => (
   <div>
-    <Link to="/wishlist">Acessar Wishlist</Link>
-    <Link to="/cart">Acessar Carrinho</Link>
+    <Navbar/>
     <h4>Lista de produtos (JSON local, apenas teste, click para acessar)</h4>
     <List>
       {PRODUTOS.map(produto =>

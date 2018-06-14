@@ -3,26 +3,31 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from 'react-redux'
+import {login} from '../reducers/actions'
 
 class UnconnectedLoginDialog extends React.PureComponent {
-  handleOpen = () => {
-    this.setState({open: true});
-  };
 
-  handleClose = () => {
-    this.setState({open: false});
-  };
+  state = {username: "", password: "", errors: []}
 
   handleLogin = () => {
-
+    if (this.state.username.length < 2) {
+      this.setState({errors: ["Username inválido (precisa ter pelo menos 2 caracteres)"]})
+    } else if (this.state.password.length <= this.state.username.length) {
+      this.setState({errors: ["Password inválido (precisa ser maior do que o nome de usário)"]})
+    } else {
+      this.props.login({username:this.state.username,password:this.state.password})
+      this.props.closeDialog()
+    }
   }
 
   render() {
+    const {username, password, errors} = this.state
+
     const actions = [
       <FlatButton
         label="Cancelar"
         primary={true}
-        onClick={this.handleClose}
+        onClick={this.props.closeDialog}
       />,
       <FlatButton
         label="Enviar"
@@ -32,20 +37,23 @@ class UnconnectedLoginDialog extends React.PureComponent {
     ];
 
     return (
-      <div>
-        <RaisedButton label="Login" onClick={this.handleOpen} />
         <Dialog
           title="Login"
           actions={actions}
           modal={true}
-          open={this.state.open}
+          open={this.props.open}
         >
           <form>
-            <input type="text"/>
+            <label>
+              Username: <input value={username} onChange={(e)=>this.setState({username:e.target.value})} type="text"/>
+            </label>
+            <label>
+              Password: <input value={password} onChange={(e)=>this.setState({password:e.target.value})} type="password"/>
+            </label>
+            <div>{errors.map(error => <div key={error}>{error}</div>)}</div>
           </form>
         </Dialog>
-      </div>
     );
   }
 }
-export const LoginDialog = connect(({user}) => ({user}))(UnconnectedLoginDialog)
+export const LoginDialog = connect(undefined,{login})(UnconnectedLoginDialog)
