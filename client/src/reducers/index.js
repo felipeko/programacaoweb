@@ -1,11 +1,13 @@
+import {combineReducers} from 'redux'
 import {
+  LOGIN,
+  LOGOUT,
   REMOVE_PRODUCT_FROM_CART,
   ADD_PRODUCT_TO_CART,
   CHANGE_QUANTITY
 } from './actions'
 
-export const shoppingCart = (state = {},action) => {
-  console.log(action)
+const shoppingCart = (state = {},action) => {
   switch (action.type) {
     case ADD_PRODUCT_TO_CART:
       return {...state, [action.id]: action.quantity + (state[action.id] || 0)}
@@ -17,3 +19,18 @@ export const shoppingCart = (state = {},action) => {
   }
   return state
 }
+
+const user = (state = null,action) => {
+  switch (action.type) {
+    case LOGIN:
+      return action.payload
+    case LOGOUT:
+      return null;
+  }
+  return state
+}
+
+export const reducers = combineReducers({
+  shoppingCart,
+  user
+})
