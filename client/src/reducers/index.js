@@ -4,7 +4,7 @@ import {
   LOGOUT,
   REMOVE_PRODUCT_FROM_CART,
   ADD_PRODUCT_TO_CART,
-  CHANGE_QUANTITY
+  CHANGE_QUANTITY, INIT_CART
 } from './actions'
 
 const shoppingCart = (state = {},action) => {
@@ -14,6 +14,8 @@ const shoppingCart = (state = {},action) => {
     case REMOVE_PRODUCT_FROM_CART:
       const {[action.id]: removed, ...products} = state
       return products
+    case INIT_CART:
+      return {...state, id: action.payload}
     case CHANGE_QUANTITY:
       return {...state, [action.id]: action.quantity}
   }

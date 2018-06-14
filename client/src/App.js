@@ -9,9 +9,34 @@ import {Produto} from './views/Produto'
 import {Carrinho} from './views/Carrinho'
 import {Wishlist} from './views/Wishlist'
 import {Navbar} from './views/Navbar'
+import {connect} from 'react-redux'
+import {initCart} from './reducers/actions'
 
 
 class App extends Component {
+
+  componentDidMount() {
+    this.initCart()
+  }
+
+  componentDidUpdate() {
+    this.initCart()
+  }
+
+  initCart = () => {
+    if (!this.props.shoppingCart.id) {
+      fetch('/initCart',
+        {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({})
+        }
+      )
+        .then(e => e.json())
+        .then(({id}) => this.props.initCart(id))
+    }
+  }
+
   render() {
     return (
       <MuiThemeProvider>
@@ -21,6 +46,7 @@ class App extends Component {
               <Route path="/produto/:id" component={Produto} exact/>
               <Route path="/cart" component={Carrinho} exact/>
               <Route path="/wishlist" component={Wishlist} exact/>
+              <Route path="/restApi" component={RestApi} exact/>
               <Route path="/" component={Index} exact/>
               <Redirect to="/"/>
             </Switch>
@@ -32,7 +58,44 @@ class App extends Component {
 }
 
 
+class RestApi extends React.Component {
+  state = {carts: [],cart: {}}
 
+  componentDidMount() {
+    fetch('/carts/')
+      .then(_=>_.json())
+      .then(({carts}) => this.setState({carts}))
+  }
+
+  loadCart = (id) => {
+    fetch('/carts/'+id)
+      .then(_=>_.json())
+      .then(cart => this.setState({cart:{...this.state.cart,[id]:cart}}))
+  }
+
+  payCart = (id) => {
+    fetch('/payCart/'+id, {method: "POST"})
+  }
+
+  render() {
+    const {carts} = this.state
+    return <div>
+      <Navbar/>
+      <h4>Carrinhos existentes</h4>
+      {
+        carts.map(id => <li>
+          {id} <a onClick={() => this.loadCart(id)}>(carregar)</a><a onClick={() => this.payCart(id)}>(marcar como pago)</a>
+          {
+            this.state.cart[id] &&
+            <code>
+              {this.state.cart[id]}
+            </code>
+          }
+        </li>)
+      }
+    </div>
+  }
+}
 
 const Index = () => (
   <div>
@@ -43,7 +106,8 @@ const Index = () => (
         <ListItem key={produto.id} containerElement={<Link to={'/produto/' + produto.id}/>}>{produto.nome}</ListItem>
       )}
     </List>
+    <Link to="restApi">restApi admin</Link>
   </div>
 )
 
-export default App
+export default connect(({shoppingCart}) => ({shoppingCart}), {initCart})(App)

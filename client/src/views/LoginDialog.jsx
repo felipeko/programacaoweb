@@ -9,7 +9,8 @@ class UnconnectedLoginDialog extends React.PureComponent {
 
   state = {username: "", password: "", errors: []}
 
-  handleLogin = () => {
+  handleLogin = (e) => {
+    e && e.preventDefault()
     if (this.state.username.length < 2) {
       this.setState({errors: ["Username inválido (precisa ter pelo menos 2 caracteres)"]})
     } else if (this.state.password.length <= this.state.username.length) {
@@ -43,7 +44,7 @@ class UnconnectedLoginDialog extends React.PureComponent {
           modal={true}
           open={this.props.open}
         >
-          <form>
+          <form onSubmit={this.handleLogin}>
             <label>
               Username: <input value={username} onChange={(e)=>this.setState({username:e.target.value})} type="text"/>
             </label>
@@ -51,6 +52,7 @@ class UnconnectedLoginDialog extends React.PureComponent {
               Password: <input value={password} onChange={(e)=>this.setState({password:e.target.value})} type="password"/>
             </label>
             <div>{errors.map(error => <div key={error}>{error}</div>)}</div>
+            <input type="submit" style={{display:"none"}} />
           </form>
         </Dialog>
     );

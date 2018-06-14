@@ -21,24 +21,27 @@ class UnconnectedProductCard extends React.Component {
   }
 
   render() {
-    const {product, addProduct, quantity} = this.props
+    const {product, addProduct, quantity, user} = this.props
     const {loading, recentlyAddedToWishlist} = this.state
     return (
       <div>
         <div>{product.nome} - R$ {product.preco}</div>
-        <div>
-          <RaisedButton onClick={() => this.addToWishList(product.id)}>
-            Adicionar na WishList
-            {loading && <CircularProgress/>}
-          </RaisedButton>
-          {recentlyAddedToWishlist &&
-          <span>Adicionado na wishlist sucesso <Link to="/wishlist">(Ver Wishlist)</Link></span>}
-        </div>
         <div><RaisedButton onClick={() => addProduct(product.id, 1)}>Adicionar ao
           Carrinho {quantity && `(contém ${quantity})`}</RaisedButton></div>
+        {user ?
+          <div>
+            <RaisedButton onClick={() => this.addToWishList(product.id)}>
+              Adicionar na WishList
+              {loading && <CircularProgress/>}
+            </RaisedButton>
+            {recentlyAddedToWishlist &&
+            <span>Adicionado na wishlist sucesso <Link to="/wishlist">(Ver Wishlist)</Link></span>}
+          </div> :
+          <div>Faça login para poder adicionar a wishlist!</div>
+        }
       </div>
     )
   }
 }
 
-export const ProductCard = connect((state, ownProps) => ({quantity: state.shoppingCart[ownProps.product.id]}), {addProduct})(UnconnectedProductCard )
+export const ProductCard = connect((state, ownProps) => ({user: state.user, quantity: state.shoppingCart[ownProps.product.id]}), {addProduct})(UnconnectedProductCard )

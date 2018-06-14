@@ -21,7 +21,7 @@ class UnconnectedNavbar extends React.Component {
     return (<div>
       {path !== '/' && <Link to="/">Voltar</Link>}
       {path !== '/cart' && <Link to="/cart">Acessar carrinho</Link>}
-      {path !== '/wishlist' && <Link to="/wishlist">Acessar wishlist</Link>}
+      {path !== '/wishlist' && user && <Link to="/wishlist">Acessar wishlist</Link>}
       {
         user ?
           <span>Bem vindo {user.username}<a onClick={logout}>(Logout)</a></span>:

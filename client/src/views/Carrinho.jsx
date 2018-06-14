@@ -5,10 +5,10 @@ import {removeProduct} from '../reducers/actions'
 import {Navbar} from './Navbar'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui'
 
-export const Carrinho = connect((state) => ({produtos: state.shoppingCart}), {removeProduct})(({produtos, removeProduct}) =>
+export const Carrinho = connect((state) => ({produtos: state.shoppingCart, user: state.user}), {removeProduct})(({produtos, removeProduct,user}) =>
   <div>
     <Navbar/>
-    <Table onCellClick={(row, column) => column === 3 && removeProduct(Object.keys(produtos)[row])}>
+    <Table onCellClick={(row, column) =>  column === 3 && removeProduct(Object.keys(produtos)[row])}>
       <TableHeader
         displaySelectAll={false}
         adjustForCheckbox={false}
