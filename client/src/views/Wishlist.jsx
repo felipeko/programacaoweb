@@ -8,14 +8,10 @@ import {Navbar} from './Navbar'
 export class Wishlist extends React.Component {
   state = {wishlist:null}
 
-  getUser = () => {
-    const url_string = window.location.href
-    const url = new URL(url_string);
-    return url.searchParams.get("user") || "default";
-  }
+  getUser = () => this.props.user &&  this.props.user.username
 
   componentDidMount() {
-    fetch('getWishlist/'+this.getUser(),{method:'GET', headers: {'Content-Type': 'application/json'}})
+    fetch('/getWishlist/'+this.getUser(),{method:'GET', headers: {'Content-Type': 'application/json'}})
       .then(_=>_.json())
       .then(wishlist => {
           Promise.all(wishlist.map(produtoId =>

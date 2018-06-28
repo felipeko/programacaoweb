@@ -7,15 +7,9 @@ import {connect} from 'react-redux'
 class UnconnectedProductCard extends React.Component {
   state = {}
 
-  getUser = () => {
-    const url_string = window.location.href
-    const url = new URL(url_string);
-    return url.searchParams.get("user") || "default";
-  }
-
   addToWishList = () => {
     this.setState({loading: true})
-    fetch('/addToWishlist'+this.getUser(),
+    fetch('/addToWishlist/'+this.props.user.username,
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

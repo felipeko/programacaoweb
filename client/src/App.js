@@ -48,7 +48,7 @@ class App extends Component {
             <Switch>
               <Route path="/produto/:id" component={Produto} exact/>
               <Route path="/cart" component={Carrinho} exact/>
-              <Route path="/wishlist" component={Wishlist} exact/>
+              <Route path="/wishlist" render={() => <Wishlist user={this.props.user}/>} exact/>
               <Route path="/restApi" component={RestApi} exact/>
               <Route path="/" component={Index} exact/>
               <Redirect to="/"/>
@@ -107,4 +107,4 @@ const Index = () => (
   </div>
 )
 
-export default connect(({shoppingCart}) => ({shoppingCart}), {initCart})(App)
+export default connect(({shoppingCart,user}) => ({shoppingCart,user}), {initCart})(App)
