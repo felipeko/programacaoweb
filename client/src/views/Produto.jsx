@@ -10,7 +10,7 @@ export class Produto extends React.Component {
     fetch('http://150.162.244.102:3000/pesquisaPorId?id='+this.props.match.params.id)
     // Promise.resolve(PRODUTOS.find(_=>_.id === Number(this.props.match.params.id)))
       .then(e=>e.json())
-      .then(produto => this.setState({produto,id:this.props.match.params.id}))
+      .then(produto => this.setState({produto: {...produto,id:this.props.match.params.id}}))
       .catch(e=>this.setState({error:"Não foi possivel encontrar o produto"}))
   }
   render() {
