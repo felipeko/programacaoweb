@@ -24,16 +24,19 @@ class App extends Component {
   }
 
   initCart = () => {
+    const url_string = window.location.href
+    const url = new URL(url_string);
+    const user = url.searchParams.get("user") || "default";
     if (!this.props.shoppingCart.id) {
       fetch('/initCart',
         {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({})
+          body: JSON.stringify({user})
         }
       )
         .then(e => e.json())
-        .then(({id}) => this.props.initCart(id))
+        .then(cart => this.props.initCart(cart))
     }
   }
 

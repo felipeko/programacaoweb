@@ -17,6 +17,7 @@ class UnconnectedLoginDialog extends React.PureComponent {
       this.setState({errors: ["Password inválido (precisa ser maior do que o nome de usário)"]})
     } else {
       this.props.login({username:this.state.username,password:this.state.password})
+      window.history.pushState ({}, "", "?user="+this.state.username);
       this.props.closeDialog()
     }
   }

@@ -15,7 +15,7 @@ const shoppingCart = (state = {},action) => {
       const {[action.id]: removed, ...products} = state
       return products
     case INIT_CART:
-      return {...state, id: action.payload}
+      return {...state, ...action.payload}
     case CHANGE_QUANTITY:
       return {...state, [action.id]: action.quantity}
   }
