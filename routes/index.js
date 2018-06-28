@@ -30,6 +30,7 @@ router.post('/initCart', function(req, res, next) {
   redisClient.get(key)
     .then(cart => {
         if (cart && !JSON.parse(cart).paid) {
+          console.log(cart)
           res.send(JSON.stringify(JSON.parse(cart).shoppingCart))
         } else {
           redisClient.set(key, JSON.stringify({id:req.body.user})).then( cart => {
