@@ -29,11 +29,11 @@ class UnconnectedProductCard extends React.Component {
         <span>R$ {product.preco}</span>
         <div>Vendedor {product.vendedor}</div>
         <div>{product.categoria} - {product.descricao}</div>
-        <div><RaisedButton onClick={() => addProduct(product._id, 1)}>Adicionar ao
+        <div><RaisedButton onClick={() => addProduct(product.id, 1)}>Adicionar ao
           Carrinho {quantity && `(contém ${quantity})`}</RaisedButton></div>
         {user ?
           <div>
-            <RaisedButton onClick={() => this.addToWishList(product._id)}>
+            <RaisedButton onClick={() => this.addToWishList(product.id)}>
               Adicionar na WishList
               {loading && <CircularProgress/>}
             </RaisedButton>
