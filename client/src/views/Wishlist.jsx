@@ -11,7 +11,17 @@ export class Wishlist extends React.Component {
   componentDidMount() {
     fetch('getWishlist',{method:'GET', headers: {'Content-Type': 'application/json'}})
       .then(_=>_.json())
-      .then(wishlist => this.setState({wishlist}))
+      .then(wishlist => {
+          Promise.all(wishlist.map(produtoId =>
+            fetch('http://150.162.244.102:3000/pesquisaPorId?id=' + produtoId)
+            // Promise.resolve(PRODUTOS.find(_ => _.id === Number(produtoId)))
+              .then(p => ({...p, id: produtoId}))
+          )).then(loadedProdutos => {
+              this.setState({loadedProdutos, wishlist})
+            }
+          )
+        }
+      )
   }
 
   removeFromWishlist = (id) => {
@@ -27,7 +37,7 @@ export class Wishlist extends React.Component {
   }
 
   render() {
-    const {wishlist} = this.state
+    const {wishlist, loadedProdutos} = this.state
     return (
       <div>
         <Navbar/>
@@ -48,7 +58,7 @@ export class Wishlist extends React.Component {
                 displayRowCheckbox={false}
               >
                 {wishlist
-                  .map((id) => PRODUTOS.find(_ => _.id === Number(id)))
+                  .map((id) => loadedProdutos.find(_ => _.id === id))
                   .map(produto =>
                     <TableRow key={produto.id}>
                       <TableRowColumn>{produto.nome}</TableRowColumn>
