@@ -7,7 +7,7 @@ var redis = require('async-redis'),
 
 /* POST add to wishlist. */
 router.post('/addToWishlist/:user', function(req, res, next) {
-  redisClient.sadd('pgweb:wishlist'+req.params.user, req.body.id).then(_ =>
+  redisClient.sadd('pgweb:wishlist:'+req.params.user, req.body.id).then(_ =>
     res.send('ok!')
   )
 })
