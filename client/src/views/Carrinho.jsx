@@ -12,7 +12,7 @@ class UnconnectedCarrinho extends React.Component {
     Promise.all(Object.keys(this.props.produtos).filter((id) => id !== 'id').map(produtoId =>
       fetch('http://150.162.244.102:3000/pesquisaPorId?id='+produtoId)
       // Promise.resolve(PRODUTOS.find(_ => _.id === Number(produtoId)))
-        .then(p => ({...p, id: Number(produtoId)}))
+        .then(p => ({...p, id: produtoId}))
     )).then(loadedProdutos => {
         this.setState({loadedProdutos})
       }
@@ -43,7 +43,7 @@ class UnconnectedCarrinho extends React.Component {
               displayRowCheckbox={false}
             >
               {Object.entries(produtos).filter(([id]) => id !== 'id')
-                .map(([id, quantidade]) => ({...loadedProdutos.find(_ => _.id === Number(id)), quantidade}))
+                .map(([id, quantidade]) => ({...loadedProdutos.find(_ => _.id === id), quantidade}))
                 .map(produto =>
                   <TableRow key={produto.id}>
                     <TableRowColumn>{produto.nome}</TableRowColumn>
