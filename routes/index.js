@@ -21,7 +21,7 @@ router.post('/removeFromWishlist', function(req, res, next) {
 /* GET wishlist. */
 router.get('/getWishlist', function(req, res, next) {
   redisClient.smembers('pgweb:wishlist')
-    .then( _ => res.send(_))
+    .then( _ => res.send(JSON.stringify(_)))
 });
 
 /* POST init cart. */
