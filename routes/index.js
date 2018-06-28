@@ -33,7 +33,7 @@ router.post('/initCart', function(req, res, next) {
           res.send(JSON.stringify(JSON.parse(cart).shoppingCart))
         } else {
           redisClient.set(key, JSON.stringify({id:req.body.user})).then( cart => {
-            res.send(JSON.stringify({id:req.body.user}))
+            res.send(JSON.stringify({shoppingCart:{id:req.body.user}}))
           })
         }
       }
