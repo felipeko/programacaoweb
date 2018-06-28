@@ -16,6 +16,19 @@ class UnconnectedNavbar extends React.Component {
     this.setState({open: false});
   }
 
+  getUser = () => {
+    const url_string = window.location.href
+    const url = new URL(url_string);
+    return url.searchParams.get("user");
+  }
+
+
+  componentDidMount() {
+    if (!this.props.user && this.getUser()) {
+      this.props.login({username:this.getUser()})
+    }
+  }
+
   render() {
     const {match: {path},logout, user} = this.props
     return (<div>
