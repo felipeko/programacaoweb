@@ -100,12 +100,6 @@ class RestApi extends React.Component {
 const Index = () => (
   <div>
     <Navbar/>
-    <h4>Lista de produtos (JSON local, apenas teste, click para acessar)</h4>
-    <List>
-      {PRODUTOS.map(produto =>
-        <ListItem key={produto.id} containerElement={<Link to={'/produto/' + produto.id}/>}>{produto.nome}</ListItem>
-      )}
-    </List>
     <Link to="restApi">restApi admin</Link>
   </div>
 )

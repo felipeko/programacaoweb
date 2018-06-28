@@ -25,7 +25,10 @@ class UnconnectedProductCard extends React.Component {
     const {loading, recentlyAddedToWishlist} = this.state
     return (
       <div>
-        <div>{product.nome} - R$ {product.preco}</div>
+        <h3>{product.nome}</h3>
+        <span>R$ {product.preco}</span>
+        <div>Vendedor {product.vendedor}</div>
+        <div>{product.categoria} - {product.descricao}</div>
         <div><RaisedButton onClick={() => addProduct(product.id, 1)}>Adicionar ao
           Carrinho {quantity && `(contém ${quantity})`}</RaisedButton></div>
         {user ?
