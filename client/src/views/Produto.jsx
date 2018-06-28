@@ -21,6 +21,7 @@ export class Produto extends React.Component {
         produto &&
         <div>
           <ProductCard product={produto}/>
+          <iframe src={"http://sv.lucas.petroski.vms.ufsc.br:3001/produto?produto="+produto.id}/>
         </div>
       }
       {
