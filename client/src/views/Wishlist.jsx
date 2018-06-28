@@ -15,6 +15,7 @@ export class Wishlist extends React.Component {
           Promise.all(wishlist.map(produtoId =>
             fetch('http://150.162.244.102:3000/pesquisaPorId?id=' + produtoId)
             // Promise.resolve(PRODUTOS.find(_ => _.id === Number(produtoId)))
+              .then(r=>r.json())
               .then(p => ({...p, id: produtoId}))
           )).then(loadedProdutos => {
               this.setState({loadedProdutos, wishlist})

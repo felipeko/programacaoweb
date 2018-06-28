@@ -12,6 +12,7 @@ class UnconnectedCarrinho extends React.Component {
     Promise.all(Object.keys(this.props.produtos).filter((id) => id !== 'id').map(produtoId =>
       fetch('http://150.162.244.102:3000/pesquisaPorId?id='+produtoId)
       // Promise.resolve(PRODUTOS.find(_ => _.id === Number(produtoId)))
+        .then(e=>e.json())
         .then(p => ({...p, id: produtoId}))
     )).then(loadedProdutos => {
         this.setState({loadedProdutos})
